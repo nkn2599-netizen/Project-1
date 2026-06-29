@@ -1,29 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
+import ProductList from "./components/ProductList";
 
 function App() {
+  const [showProductList, setShowProductList] = useState(false);
+
+  const handleGetStartedClick = () => {
+    setShowProductList(true);
+  };
+
   return (
-    <div className="landing-page background-image">
-      <div className="landing-content">
-        <h1>e-plantShopping</h1>
+    <div className="app-container">
+      {!showProductList ? (
+        <div className="landing-page background-image">
+          <div className="landing-content">
+            <h1>Paradise Nursery</h1>
 
-        <p>
-          Welcome to e-plantShopping — your trusted online store for fresh,
-          healthy, and beautiful houseplants delivered to your doorstep.
-        </p>
+            <p>
+              Welcome to Paradise Nursery — your destination for fresh,
+              beautiful, and healthy plants.
+            </p>
 
-        <p>
-          We help you bring nature closer with a wide collection of indoor and
-          outdoor plants for every space.
-        </p>
+            <p>
+              Explore a wide variety of indoor and outdoor plants to make your
+              space greener and more peaceful.
+            </p>
 
-        <button
-          className="landing-button"
-          onClick={() => alert("Get Started - Coming Soon")}
-        >
-          Get Started
-        </button>
-      </div>
+            <button
+              className="landing-button"
+              onClick={handleGetStartedClick}
+            >
+              Get Started
+            </button>
+          </div>
+        </div>
+      ) : (
+        <ProductList />
+      )}
     </div>
   );
 }
