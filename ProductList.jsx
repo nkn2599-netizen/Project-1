@@ -1,54 +1,75 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart } from "../redux/CartSlice";
+import { addItem } from "../redux/CartSlice";
 
 const productsData = [
-  // Indoor Plants
+  // 🌱 Indoor Plants
   {
     id: 1,
     name: "Snake Plant",
     price: 25,
-    category: "Indoor",
+    category: "Indoor Plants",
     image: "https://images.unsplash.com/photo-1593482892290-34a6b0f0a1f2",
   },
   {
     id: 2,
     name: "Peace Lily",
     price: 30,
-    category: "Indoor",
+    category: "Indoor Plants",
     image: "https://images.unsplash.com/photo-1593691509543-c55fb32e7355",
   },
-
-  // Outdoor Plants
   {
     id: 3,
-    name: "Bougainvillea",
-    price: 20,
-    category: "Outdoor",
+    name: "ZZ Plant",
+    price: 28,
+    category: "Indoor Plants",
     image: "https://images.unsplash.com/photo-1614594975525-e45190c55d0b",
   },
+
+  // 🌿 Outdoor Plants
   {
     id: 4,
     name: "Hibiscus",
     price: 18,
-    category: "Outdoor",
+    category: "Outdoor Plants",
     image: "https://images.unsplash.com/photo-1598880940080-ff9f6c1f2d6f",
   },
-
-  // Succulents
   {
     id: 5,
-    name: "Aloe Vera",
-    price: 15,
-    category: "Succulent",
-    image: "https://images.unsplash.com/photo-1596547609652-9cf3d8f8f4a3",
+    name: "Bougainvillea",
+    price: 22,
+    category: "Outdoor Plants",
+    image: "https://images.unsplash.com/photo-1614594975525-e45190c55d0b",
   },
   {
     id: 6,
+    name: "Rose Plant",
+    price: 20,
+    category: "Outdoor Plants",
+    image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6",
+  },
+
+  // 🌵 Succulents
+  {
+    id: 7,
+    name: "Aloe Vera",
+    price: 15,
+    category: "Succulents",
+    image: "https://images.unsplash.com/photo-1596547609652-9cf3d8f8f4a3",
+  },
+  {
+    id: 8,
     name: "Cactus",
     price: 12,
-    category: "Succulent",
+    category: "Succulents",
     image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6",
+  },
+  {
+    id: 9,
+    name: "Echeveria",
+    price: 14,
+    category: "Succulents",
+    image: "https://images.unsplash.com/photo-1587334274328-64186a80a6a5",
   },
 ];
 
@@ -59,17 +80,19 @@ const ProductList = () => {
   const [addedItems, setAddedItems] = useState([]);
 
   const handleAdd = (product) => {
-    dispatch(addToCart(product));
-    setAddedItems([...addedItems, product.id]);
+    dispatch(addItem(product));
+    setAddedItems((prev) => [...prev, product.id]);
   };
 
   const isAdded = (id) => addedItems.includes(id);
+
+  const categories = ["Indoor Plants", "Outdoor Plants", "Succulents"];
 
   return (
     <div>
       {/* NAVBAR */}
       <nav style={styles.navbar}>
-        <h2>Paradise Nursery</h2>
+        <h2>e-plantShopping</h2>
 
         <div style={styles.navLinks}>
           <a href="/">Home</a>
@@ -78,35 +101,49 @@ const ProductList = () => {
         </div>
       </nav>
 
-      {/* PRODUCT SECTION */}
       <h2 style={{ textAlign: "center", margin: "20px 0" }}>
-        Our Plants Collection
+        Our Plant Collection
       </h2>
 
-      <div style={styles.grid}>
-        {productsData.map((product) => (
-          <div key={product.id} style={styles.card}>
-            <img src={product.image} alt={product.name} style={styles.image} />
+      {/* CATEGORY GROUPING */}
+      {categories.map((cat) => (
+        <div key={cat}>
+          <h2 style={styles.categoryTitle}>{cat}</h2>
 
-            <h3>{product.name}</h3>
-            <p>${product.price}</p>
+          <div style={styles.grid}>
+            {productsData
+              .filter((p) => p.category === cat)
+              .map((product) => (
+                <div key={product.id} style={styles.card}>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    style={styles.image}
+                  />
 
-            <span style={styles.category}>{product.category}</span>
+                  <h3>{product.name}</h3>
+                  <p>${product.price}</p>
 
-            <button
-              style={{
-                ...styles.button,
-                backgroundColor: isAdded(product.id) ? "gray" : "green",
-                cursor: isAdded(product.id) ? "not-allowed" : "pointer",
-              }}
-              disabled={isAdded(product.id)}
-              onClick={() => handleAdd(product)}
-            >
-              {isAdded(product.id) ? "Added" : "Add to Cart"}
-            </button>
+                  <button
+                    style={{
+                      ...styles.button,
+                      backgroundColor: isAdded(product.id)
+                        ? "gray"
+                        : "green",
+                      cursor: isAdded(product.id)
+                        ? "not-allowed"
+                        : "pointer",
+                    }}
+                    disabled={isAdded(product.id)}
+                    onClick={() => handleAdd(product)}
+                  >
+                    {isAdded(product.id) ? "Added" : "Add to Cart"}
+                  </button>
+                </div>
+              ))}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 };
@@ -118,11 +155,14 @@ const styles = {
     padding: "15px 20px",
     backgroundColor: "#2e7d32",
     color: "white",
-    alignItems: "center",
   },
   navLinks: {
     display: "flex",
     gap: "15px",
+  },
+  categoryTitle: {
+    margin: "20px",
+    color: "#2e7d32",
   },
   grid: {
     display: "grid",
@@ -148,12 +188,6 @@ const styles = {
     color: "white",
     border: "none",
     borderRadius: "5px",
-  },
-  category: {
-    display: "block",
-    fontSize: "12px",
-    color: "gray",
-    marginBottom: "5px",
   },
 };
 
