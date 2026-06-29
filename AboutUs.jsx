@@ -2,44 +2,25 @@ import React from "react";
 
 const AboutUs = () => {
   return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>About Us</h1>
+    <div className="about-us-container">
+      <h1>About e-plantShopping</h1>
 
-      <p style={styles.text}>
-        Welcome to Paradise Nursery. We are passionate about bringing fresh,
-        healthy, and high-quality plants to your home and workspace.
+      <p>
+        e-plantShopping is a modern online platform dedicated to making plant
+        shopping simple, accessible, and enjoyable for everyone.
       </p>
 
-      <p style={styles.text}>
-        Our mission is to make gardening simple and enjoyable for everyone,
-        whether you're a beginner or an experienced plant lover. We carefully
-        select and nurture each plant to ensure it thrives in your environment.
+      <p>
+        We offer a wide variety of indoor, outdoor, and decorative plants
+        carefully selected to bring freshness and beauty to your living spaces.
       </p>
 
-      <p style={styles.text}>
-        We specialize in indoor plants, outdoor plants, and decorative greenery
-        that help create a peaceful and refreshing atmosphere.
+      <p>
+        Our mission is to promote greener lifestyles by helping customers
+        easily find and purchase high-quality plants with convenience and care.
       </p>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    padding: "40px",
-    maxWidth: "800px",
-    margin: "0 auto",
-    fontFamily: "Arial, sans-serif",
-    lineHeight: "1.6",
-  },
-  heading: {
-    textAlign: "center",
-    marginBottom: "20px",
-  },
-  text: {
-    marginBottom: "15px",
-    fontSize: "16px",
-  },
 };
 
 export default AboutUs;
