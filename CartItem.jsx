@@ -1,19 +1,20 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import {
-  addToCart,
-  removeFromCart,
-} from "../redux/CartSlice";
+import { removeItem, updateQuantity } from "../redux/CartSlice";
 
 const CartItem = ({ item }) => {
   const dispatch = useDispatch();
 
   const handleIncrease = () => {
-    dispatch(addToCart(item));
+    dispatch(updateQuantity({ id: item.id, type: "increase" }));
   };
 
   const handleDecrease = () => {
-    dispatch(removeFromCart(item.id));
+    dispatch(updateQuantity({ id: item.id, type: "decrease" }));
+  };
+
+  const handleRemove = () => {
+    dispatch(removeItem(item.id));
   };
 
   return (
@@ -22,23 +23,23 @@ const CartItem = ({ item }) => {
 
       <div style={styles.details}>
         <h3>{item.name}</h3>
+
         <p>Unit Price: ${item.price}</p>
 
-        <p>
+        <p>Quantity: {item.quantity}</p>
+
+        {/* TOTAL PER ITEM */}
+        <p style={{ fontWeight: "bold" }}>
           Total: ${item.price * item.quantity}
         </p>
 
         <div style={styles.controls}>
           <button onClick={handleDecrease}>-</button>
-          <span>{item.quantity}</span>
           <button onClick={handleIncrease}>+</button>
         </div>
 
-        <button
-          style={styles.delete}
-          onClick={() => dispatch(removeFromCart(item.id))}
-        >
-          Delete
+        <button style={styles.delete} onClick={handleRemove}>
+          Remove
         </button>
       </div>
     </div>
@@ -65,7 +66,6 @@ const styles = {
   controls: {
     display: "flex",
     gap: "10px",
-    alignItems: "center",
     marginTop: "10px",
   },
   delete: {
